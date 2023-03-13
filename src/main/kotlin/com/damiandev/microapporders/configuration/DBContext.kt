@@ -6,16 +6,15 @@ import javax.sql.DataSource
 
 
 object DBContext {
+    lateinit var dataSource: DataSource
 
-    var dataSource: DataSource = connect()
-
-    private fun connect(): DataSource{
+    fun init(url: String, driverClassName: String, username: String, password: String) {
         val config = HikariConfig()
-        config.jdbcUrl = "jdbc:postgresql://localhost:5432/ordersdb"
-        config.driverClassName="org.postgresql.Driver"
-        config.username = "postgres"
-        config.password = "docker"
+        config.jdbcUrl = url
+        config.driverClassName = driverClassName
+        config.username = username
+        config.password = password
 
-        return HikariDataSource(config)
+        dataSource = HikariDataSource(config)
     }
 }
